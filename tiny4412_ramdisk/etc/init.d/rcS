@@ -1,0 +1,16 @@
+#!/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export PATH
+
+mount -t ramfs none  /dev
+mount -t sysfs none  /sys
+mount -t proc  none  /proc
+mount -t tmpfs none  /tmp
+
+mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+mdev -s
+
+/bin/hostname -F /etc/hostname
